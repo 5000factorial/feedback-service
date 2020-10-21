@@ -28,3 +28,5 @@ python3 manage.py createsuperuser
 ```
 python3 manage.py runserver
 ```
+
+Админка будет доступна по адресу localhost:8000/admin/
