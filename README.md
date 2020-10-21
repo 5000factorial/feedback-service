@@ -12,15 +12,19 @@ python3 -m venv venv
 ```
 . venv/bin/activate
 ```
-3. Установить зависимости
+4. Установить зависимости
 ```
 pip3 install -r requirements.txt
 ```
-4. Применить миграции
+5. Применить миграции
 ```
 python3 manage.py migrate
 ```
-5. Запустить
+6. Создать администратора
+```
+python3 manage.py createsuperuser
+```
+7. Запустить
 ```
 python3 manage.py runserver
 ```
