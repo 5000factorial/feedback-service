@@ -1,0 +1,1 @@
+web: gunicorn feedback-service.wsgi
