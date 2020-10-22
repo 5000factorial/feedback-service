@@ -1,1 +1,1 @@
-web: gunicorn feedback-service.wsgi
+web: gunicorn feedback_service.wsgi
