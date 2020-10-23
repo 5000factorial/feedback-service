@@ -1,6 +1,7 @@
 # feedback-service
 
 ## [Доска Kanban](https://github.com/5000factorial/feedback-service/projects/1)
+## [Сервер](https://feedback-service-spbu.herokuapp.com)
 
 ## Установка
 0. Убедиться что есть python3
