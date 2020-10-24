@@ -9,7 +9,7 @@ from core.models import Pool, Question, UserAnswer, AnswerOption, User
 class PoolView(DetailView):
     model = Pool
 
-    def get(self, request):
+    def get(self, request, pk):
         pool = self.get_object()
         # Template generates here
         pass
