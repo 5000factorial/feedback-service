@@ -26,7 +26,7 @@ class Question(NameMixin, models.Model):
         choices=CATEGORIES,
         default=CLOSED,
     )
- 
+
 
 class AnswerOption(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False)
@@ -45,3 +45,4 @@ class UserAnswer(models.Model):
 class Pool(NameMixin, models.Model):
     name = models.CharField(max_length=256, null=False)
     questions = models.ManyToManyField(Question)
+
