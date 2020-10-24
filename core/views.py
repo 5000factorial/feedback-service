@@ -7,12 +7,16 @@ from core.models import Pool
 
 
 class PoolView(DetailView):
-    model = Pool
+    queryset = Pool.objects.prefetch_related('questions')
 
     def get(self, request):
-        pool = self.object
+        pool = self.get_object()
         # Template generates here
         pass
 
     def post(self, request):
-        pass
+        pool = self.get_object()
+        answer_options_to_create = []
+        answers_to_create = []
+        for q_id, answer in request.POST:
+            pass
