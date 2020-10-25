@@ -10,9 +10,10 @@ class PoolView(DetailView):
     model = Pool
 
     def get(self, request, pk):
-        pool = self.get_object()
+        pool = Pool.objects.get(pk=pk)
+        questions = pool.questions.all()
         # Template generates here
-        pass
+        return render(request, "pool.html", context={"questions": questions})
 
     def post(self, request):
         questions = Question.objects.filter(pk__in=request.POST.keys())
