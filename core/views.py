@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
 from django.views.generic.detail import DetailView
+from collections import defaultdict
 
 from core.models import Pool, Question, UserAnswer, AnswerOption, User
 
@@ -12,8 +13,12 @@ class PoolView(DetailView):
     def get(self, request, pk):
         pool = Pool.objects.get(pk=pk)
         questions = pool.questions.all()
-        # Template generates here
-        return render(request, "pool.html", context={"questions": questions})
+
+        result = defaultdict(list)
+        for item in questions:
+            result[item] = [el.text for el in AnswerOption.objects.filter(question=item)]
+        print(result.items())
+        return render(request, "pool.html", context={"result": dict(result)})
 
     def post(self, request):
         questions = Question.objects.filter(pk__in=request.POST.keys())

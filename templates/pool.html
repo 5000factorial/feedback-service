@@ -2,15 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Pool</title>
 </head>
 <body>
-{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        {% block content %}
+            {% if result %}
+                <h3>Вопросы</h3>
+                <p>
+                    {% for q, list_of_answers in result.items %}
+                        <h4>{{ q.name }}</h4>
+                        {% if list_of_answers %}
+                            <form>
+                            {% for option in list_of_answers %}
+                              <input type="radio" id="{{ q }}: {{ option }}" name="{{ q }}">
+                              <label for="{{ q }}: {{ option }}">{{ option }}</label><br>
+                            {% endfor %}
+                            </form>
+                        {% endif %}
+                        {% if not list_of_answers %}
+                            <form>
+                                <label for="{{ q }}: {{ option }}">Введите ответ на вопрос</label><br>
+                                <input type="text" id="{{ q }}: {{ option }}">
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            {% endif %}
+        {% endblock %}
 
-{% for q in questions.roomchoicethru_set.all %}
-  {{ q}}
-{% endfor %}
-{% endblock %}
-
+    </div>
+</div>
 </body>
 </html>
