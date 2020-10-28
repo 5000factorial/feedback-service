@@ -13,25 +13,25 @@
             {% if result %}
                 <h3>{{ pool_name }}</h3>
                 <p>
+                <form method="post">{% csrf_token %}
                     {% for q, list_of_answers in result.items %}
                         <h4>{{ q.name }}</h4>
                         <h4>{{ q.content }}</h4>
                         {% if list_of_answers %}
-                            <form>
                             {% for option in list_of_answers %}
                               <input type="radio" id="{{ q }}: {{ option }}" name="{{ q }}">
                               <label for="{{ q }}: {{ option }}">{{ option }}</label><br>
                             {% endfor %}
-                            </form>
                         {% endif %}
                         {% if not list_of_answers %}
-                            <form>
                                 <label for="{{ q }}: {{ option }}">Введите ответ на вопрос</label><br>
-                                <input type="text" id="{{ q }}: {{ option }}">
-                            </form>
+                                <textarea class="form-control" id="{{ q }}: {{ option }}" rows="3"></textarea>
                         {% endif %}
                         <br>
                     {% endfor %}
+                    <br>
+                    <button type="submit" class="btn btn-primary">Отправить ответ</button>
+                </form>
                 </p>
             {% endif %}
         {% endblock %}

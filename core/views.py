@@ -17,10 +17,9 @@ class PoolView(DetailView):
         result = defaultdict(list)
         for item in questions:
             result[item] = [el.text for el in AnswerOption.objects.filter(question=item)]
-        print(result.items())
         return render(request, "pool.html", context={"pool_name": pool.name, "result": dict(result)})
 
-    def post(self, request):
+    def post(self, request, pk):
         questions = Question.objects.filter(pk__in=request.POST.keys())
 
         user_answers_to_create = []
