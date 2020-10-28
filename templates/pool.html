@@ -11,10 +11,11 @@
     <div class="container">
         {% block content %}
             {% if result %}
-                <h3>Вопросы</h3>
+                <h3>{{ pool_name }}</h3>
                 <p>
                     {% for q, list_of_answers in result.items %}
                         <h4>{{ q.name }}</h4>
+                        <h4>{{ q.content }}</h4>
                         {% if list_of_answers %}
                             <form>
                             {% for option in list_of_answers %}
@@ -29,6 +30,7 @@
                                 <input type="text" id="{{ q }}: {{ option }}">
                             </form>
                         {% endif %}
+                        <br>
                     {% endfor %}
                 </p>
             {% endif %}

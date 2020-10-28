@@ -18,7 +18,7 @@ class PoolView(DetailView):
         for item in questions:
             result[item] = [el.text for el in AnswerOption.objects.filter(question=item)]
         print(result.items())
-        return render(request, "pool.html", context={"result": dict(result)})
+        return render(request, "pool.html", context={"pool_name": pool.name, "result": dict(result)})
 
     def post(self, request):
         questions = Question.objects.filter(pk__in=request.POST.keys())
