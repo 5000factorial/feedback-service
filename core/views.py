@@ -25,15 +25,15 @@ class PoolView(DetailView):
         questions = Question.objects.filter(pk__in=question_pks)
 
         user_answers_to_create = []
-        user = User.objects.get_or_create(username='test_user')
+        user, _ = User.objects.get_or_create(username='test_user')
 
         for question in questions:
-            answer = request.POST[question.id]
-            if question.type == Question.CLOSED:
+            answer = request.POST[str(question.id)]
+            if question.category == Question.CLOSED:
                 user_answers_to_create.append(
                     UserAnswer(user=user, question=question, option_id=answer)
                 )
-            elif question.type == Question.OPEN:
+            elif question.category == Question.OPEN:
                 answer_option = AnswerOption.objects.get_or_create(
                     question=question,
                     text=answer.lower()
