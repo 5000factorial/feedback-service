@@ -20,7 +20,9 @@ class PoolView(DetailView):
         return render(request, "pool.html", context={"pool_name": pool.name, "result": dict(result)})
 
     def post(self, request, pk):
-        questions = Question.objects.filter(pk__in=request.POST.keys())
+        question_pks = set(request.POST.keys())
+        question_pks.remove('csrfmiddlewaretoken')
+        questions = Question.objects.filter(pk__in=question_pks)
 
         user_answers_to_create = []
         user = User.objects.get_or_create(username='test_user')

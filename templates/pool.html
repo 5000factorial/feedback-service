@@ -15,15 +15,14 @@
                 <p>
                 <form method="post">{% csrf_token %}
                     {% for q, list_of_answers in result.items %}
-                        <h4>{{ q.name }}</h4>
                         <h4>{{ q.content }}</h4>
-                        {% if list_of_answers %}
-                            {% for option in list_of_answers %}
-                              <input type="radio" id="{{ q }}: {{ option }}" name="{{ q }}">
-                              <label for="{{ q }}: {{ option }}">{{ option }}</label><br>
+                        {% if q.category == q.CLOSED %}
+                            {% for option in q.options.all %}
+                              <input type="radio" id="{{ q }}: {{ option }}" name="{{ q.id }}" value="{{ option.id }}">
+                              <label for="{{ q }}: {{ option }}"> {{ option.text }} </label><br>
                             {% endfor %}
                         {% endif %}
-                        {% if not list_of_answers %}
+                        {% if q.category == q.OPEN %}
                                 <label for="{{ q }}: {{ option }}">Введите ответ на вопрос</label><br>
                                 <textarea class="form-control" id="{{ q }}: {{ option }}" rows="3"></textarea>
                         {% endif %}
