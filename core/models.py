@@ -29,7 +29,7 @@ class Question(NameMixin, models.Model):
 
 
 class AnswerOption(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False, related_name='options')
     text = models.TextField(null=False, help_text='Text representation of answer option')
 
     def __str__(self):

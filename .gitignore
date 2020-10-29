@@ -364,6 +364,7 @@ Temporary Items
 # CodeStream plugin
 # https://plugins.jetbrains.com/plugin/12206-codestream
 
+.idea
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json

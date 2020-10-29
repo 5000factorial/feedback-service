@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Pool</title>
+</head>
+<body>
+<div class="jumbotron">
+    <div class="container">
+        {% block content %}
+            {% if result %}
+                <h3>{{ pool_name }}</h3>
+                <p>
+                <form method="post">{% csrf_token %}
+                    {% for q, list_of_answers in result.items %}
+                        <h4>{{ q.content }}</h4>
+                        {% if q.category == q.CLOSED %}
+                            {% for option in q.options.all %}
+                              <input type="radio" id="{{ q }}: {{ option }}" name="{{ q.id }}" value="{{ option.id }}">
+                              <label for="{{ q }}: {{ option }}"> {{ option.text }} </label><br>
+                            {% endfor %}
+                        {% endif %}
+                        {% if q.category == q.OPEN %}
+                                <label for="{{ q }}: {{ option }}">Введите ответ на вопрос</label><br>
+                                <textarea class="form-control" id="{{ q }}: {{ option }}" rows="3"></textarea>
+                        {% endif %}
+                        <br>
+                    {% endfor %}
+                    <br>
+                    <button type="submit" class="btn btn-primary">Отправить ответ</button>
+                </form>
+                </p>
+            {% endif %}
+        {% endblock %}
+
+    </div>
+</div>
+</body>
+</html>
