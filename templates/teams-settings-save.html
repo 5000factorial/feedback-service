@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src='https://statics.teams.cdn.office.net/sdk/v1.6.0/js/MicrosoftTeams.min.js'></script>
+</head>
+
+<body>
+    <p>All done! Click Save button</p>
+    <script>
+        microsoftTeams.initialize();
+
+        microsoftTeams.settings.setValidityState(true);
+
+        const contextUrlParams = '&team_id={teamId}' + 
+                                 '&team_name={teamName}' + 
+                                 '&channel_id={channelId}' +
+                                 '&channel_name={channelName}' + 
+                                 '&user_id={userObjectId}' + 
+                                 '&user_name={userPrincipalName}';
+        
+        microsoftTeams.settings.registerOnSaveHandler((saveEvent) => {
+            microsoftTeams.settings.setSettings({
+                websiteUrl: "{{ website_url }}",
+                contentUrl: "{{ content_url }}" + contextUrlParams,
+                suggestedDisplayName: "{{ display_name }}"
+            });
+            saveEvent.notifySuccess();
+        });
+    </script>
+</body>

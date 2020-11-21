@@ -4,7 +4,18 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <title>Pool</title>
+    <title>Pool {{ pool_name }}</title>
+{% comment %} 
+    {% if in_teams_tab %}
+    <script src='https://statics.teams.cdn.office.net/sdk/v1.6.0/js/MicrosoftTeams.min.js'></script>
+    <script>
+        microsoftTeams.initialize();
+        let globalContext;
+        microsoftTeams.getContext(function(context) {
+            globalContext = context;
+        })
+    </script>
+    {% endif %} {% endcomment %}
 </head>
 <body>
 <div class="jumbotron">

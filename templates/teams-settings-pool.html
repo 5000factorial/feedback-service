@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h4>Select Pool that will be displayed in Tab</h4>
+    <form action="/teams/settings/save/">
+        <select name="pool">
+            <option hidden disabled selected value>-- select pool --</option>
+            {% for pool in pools %}
+            <option value={{ pool.id }}>{{ pool.name }}</option>
+            {% endfor%}
+        </select>
+        <input type="hidden" name="token" value="{{ teams_token }}">
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
