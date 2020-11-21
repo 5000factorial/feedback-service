@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
+import uuid
 
 
 class User(DjangoUser):
@@ -9,6 +10,13 @@ class User(DjangoUser):
 class NameMixin:
     def __str__(self):
         return f'{self.name} (id: {self.id})'
+
+
+class TeamsToken(models.Model):
+    token = models.UUIDField(default=uuid.uuid4, editable=False)
+
+    def __str__(self):
+        return str(self.token)
 
 
 class Question(NameMixin, models.Model):

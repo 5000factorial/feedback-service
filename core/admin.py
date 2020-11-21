@@ -12,7 +12,12 @@ class QuestionAdmin(nested_admin.NestedModelAdmin):
     inlines = [AnswerOptionInline]
 
 
+class TeamsTokenAdmin(admin.ModelAdmin):
+    readonly_fields=('token',)
+
+
 admin.site.register(models.User)
+admin.site.register(models.TeamsToken, TeamsTokenAdmin)
 admin.site.register(models.Question, QuestionAdmin)
 
 # For development
