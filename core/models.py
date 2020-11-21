@@ -3,13 +3,15 @@ from django.contrib.auth.models import User as DjangoUser
 import uuid
 
 
-class User(DjangoUser):
-    pass
-
-
 class NameMixin:
     def __str__(self):
         return f'{self.name} (id: {self.id})'
+
+
+class User(DjangoUser):
+    pass
+# class User(models.Model):
+#     email = models.EmailField(null=True)
 
 
 class TeamsToken(models.Model):
@@ -54,3 +56,15 @@ class Pool(NameMixin, models.Model):
     name = models.CharField(max_length=256, null=False)
     questions = models.ManyToManyField(Question)
 
+
+# class PoolAnswer(models.Model)
+
+class PoolToken(models.Model):
+    token = models.UUIDField(default=uuid.uuid4, editable=False)
+    pool = models.ForeignKey(Pool, on_delete=models.CASCADE, null=False)
+    # one_time = models.BooleanField(default=False)
+
+    # For external integration
+
+    def __str__(self):
+        return str(self.token)
