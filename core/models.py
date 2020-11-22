@@ -98,7 +98,7 @@ class PoolAnswer(models.Model):
 
 
 class UserAnswer(models.Model):
-    user = models.ForeignKey(PoolUser, on_delete=models.CASCADE, null=False)
+    user = models.ForeignKey(TeamsUser, on_delete=models.CASCADE, null=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False)
     option = models.ForeignKey(AnswerOption, on_delete=models.CASCADE, null=False)
     pool_answer = models.ForeignKey(PoolAnswer, on_delete=models.CASCADE)
