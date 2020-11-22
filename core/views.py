@@ -79,7 +79,7 @@ class PoolView(DetailView):
             )
 
         pool_answer = PoolAnswer.objects.create(
-            ip=get_client_ip(request),
+            ip=get_client_ip(request)[0],
             pool_token=PoolToken.objects.get(token=request.POST['token']),
             teams_channel=teams_channel,
             teams_user=teams_user,
