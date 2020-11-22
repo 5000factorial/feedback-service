@@ -3,7 +3,6 @@ from django.http import HttpResponse, JsonResponse, HttpResponsePermanentRedirec
 from django.views import View
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
-from collections import defaultdict
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.utils.safestring import mark_safe
@@ -88,7 +87,6 @@ class PoolView(DetailView):
         )
 
         user_answers_to_create = []
-        user, _ = PoolUser.objects.get_or_create(anonymous=True)
 
         for question in questions:
             answer = request.POST.get(f'question_{question.id}')
