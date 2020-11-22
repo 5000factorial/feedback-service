@@ -1,4 +1,4 @@
-def app_manifest(website_url, privacy_url, tos_url, configuration_url, valid_domains):
+def app_manifest(context):
     return {
         "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json",
         "manifestVersion": "1.8",
@@ -7,9 +7,9 @@ def app_manifest(website_url, privacy_url, tos_url, configuration_url, valid_dom
         "packageName": "ru.spbu.feedback-service",
         "developer": {
             "name": "Saint Petersburg University",
-            "websiteUrl": website_url,
-            "privacyUrl": privacy_url,
-            "termsOfUseUrl": tos_url,
+            "websiteUrl": context['website_url'],
+            "privacyUrl": context['privacy_url'],
+            "termsOfUseUrl": context['tos_url'],
         },
         "icons": {
             "color": "color.png",
@@ -26,7 +26,7 @@ def app_manifest(website_url, privacy_url, tos_url, configuration_url, valid_dom
         "accentColor": "#FFFFFF",
         "configurableTabs": [
             {
-                "configurationUrl": configuration_url,
+                "configurationUrl": context['configuration_url'],
                 "canUpdateConfiguration": True,
                 "scopes": ["team", "groupchat"],
                 "context": [
@@ -39,5 +39,5 @@ def app_manifest(website_url, privacy_url, tos_url, configuration_url, valid_dom
             "identity",
             "messageTeamMembers"
         ],
-        "validDomains": valid_domains
+        "validDomains": context['valid_domains']
     }

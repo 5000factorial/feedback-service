@@ -148,15 +148,18 @@ def teams_settings_save(request):
 
 
 def teams_manifest(request):
-    return HttpResponse('')
-    # TODO
-    # website_url
-    # privacy_url
-    # tos_url
-    # configuration_url
-    # valid_domains
-
-    # return JsonResponse(app_manifest())
+    context = {
+        'website_url': request.build_absolute_uri('/'),
+        'privacy_url': request.build_absolute_uri('/teams/privacy/'),
+        'tos_url': request.build_absolute_uri('/teams/tos/'),
+        'configuration_url': request.build_absolute_uri('/teams/settings/auth/'),
+        'valid_domains': [request.get_host()]
+    }
+    response = JsonResponse(app_manifest(context))
+    response['Content-Disposition'] = (
+        'attachment; filename=fs_teams_manifest.json'
+    )
+    return response
 
 
 def root(request):
