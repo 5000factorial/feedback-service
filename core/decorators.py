@@ -1,5 +1,7 @@
 from core.models import TeamsToken, PoolToken
 from typing import Callable
+from django.core.exceptions import PermissionDenied
+
 
 def teams_tab_view(func):
     """

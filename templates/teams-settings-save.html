@@ -11,12 +11,12 @@
 
         microsoftTeams.settings.setValidityState(true);
 
-        const contextUrlParams = '&team_id={teamId}' + 
-                                 '&team_name={teamName}' + 
-                                 '&channel_id={channelId}' +
-                                 '&channel_name={channelName}' + 
-                                 '&user_id={userObjectId}' + 
-                                 '&user_name={userPrincipalName}';
+        const contextUrlParams = '&mst_team_id={teamId}' + 
+                                 '&mst_team_name={teamName}' + 
+                                 '&mst_channel_id={channelId}' +
+                                 '&mst_channel_name={channelName}' + 
+                                 '&mst_user_id={userObjectId}' + 
+                                 '&mst_user_name={userPrincipalName}';
         
         microsoftTeams.settings.registerOnSaveHandler((saveEvent) => {
             microsoftTeams.settings.setSettings({

@@ -14,17 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.root, name='root'),
+
     path('pool/<int:pk>/', views.PoolView.as_view(), name='pool'),
     
     path('teams/settings/auth/', views.teams_settings_auth, name='teams_settings_auth'),
     path('teams/settings/pool/', views.teams_settings_pool, name='teams_settings_pool'),
     path('teams/settings/save/', views.teams_settings_save, name='teams_settings_auth'),
-    # path('teams/pool/<int:pk>/', views.teams_content, name='teams_pool'),
-
-    # path('teams/manifest/', views.teams_manifest, name='teams_manifest'),
+    
+    path('report_builder/', include('report_builder.urls'))
 ]
