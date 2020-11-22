@@ -25,23 +25,19 @@ def app_manifest(website_url, privacy_url, tos_url, configuration_url, valid_dom
         },
         "accentColor": "#FFFFFF",
         "configurableTabs": [
-        {
-            "configurationUrl": configuration_url,
-            "canUpdateConfiguration": True,
-            "scopes": ["team", "groupchat"],
-            "context": [
-                "channelTab",
-                "privateChatTab",
-            ],
-            "supportedSharePointHosts": [
-            "sharePointFullPage",
-            "sharePointWebPart"
-            ]
-        }
+            {
+                "configurationUrl": configuration_url,
+                "canUpdateConfiguration": True,
+                "scopes": ["team", "groupchat"],
+                "context": [
+                    "channelTab",
+                    "privateChatTab",
+                ],
+            }
         ],
         "permissions": [
-        "identity",
-        "messageTeamMembers"
+            "identity",
+            "messageTeamMembers"
         ],
         "validDomains": valid_domains
     }
