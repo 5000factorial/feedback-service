@@ -27,7 +27,7 @@ class PoolTokenAdminMixin:
 
     def pool_link(self, obj):
         url = self.request.build_absolute_uri(
-            f'/pool/{obj.pool.id}/?token={obj}'
+            f'/pool/{obj.pool.id}/?token={str(obj.token)}'
         )
         return format_html(f'<a href={url}>{url}</a>')
 
