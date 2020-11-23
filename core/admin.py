@@ -53,6 +53,7 @@ admin.site.register(models.Question, QuestionAdmin)
 admin.site.register(models.TeamsChannel)
 admin.site.register(models.TeamsTeam)
 admin.site.register(models.TeamsUser)
+admin.site.register(models.PoolAnswer)
 
 # For development
 admin.site.register(models.AnswerOption)
