@@ -136,10 +136,11 @@ def teams_settings_save(request):
     pool_id = request.GET['pool']
     pool_token = PoolToken.objects.create(pool_id=request.GET['pool'])
     build_url = lambda u: mark_safe(request.build_absolute_uri(u))
+    token_str = str(pool_token.token)
     context = {
-        'pool_token': str(pool_token.token),
+        'pool_token': token_str,
         'website_url': build_url('/'),
-        'content_url': build_url(f'/pool/{pool_id}/?token={pool_token}'),
+        'content_url': build_url(f'/pool/{pool_id}/?token={token_str}'),
         'display_name': 'Feedback service',
     }
     return render(request, 'teams-settings-save.html', context=context)
