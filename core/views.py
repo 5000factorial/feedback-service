@@ -94,7 +94,7 @@ class PoolView(DetailView):
                 continue
             if question.category == Question.CLOSED:
                 user_answers_to_create.append(
-                    UserAnswer(user=user, question=question, option_id=answer,
+                    UserAnswer(user=teams_user, question=question, option_id=answer,
                                pool_answer=pool_answer)
                 )
             elif question.category == Question.OPEN:
@@ -104,7 +104,7 @@ class PoolView(DetailView):
                 )
                 user_answers_to_create.append(
                     UserAnswer(
-                        user=user,
+                        user=teams_user,
                         question=question,
                         pool_answer=pool_answer,
                         option_id=answer_option.id
@@ -137,7 +137,7 @@ def teams_settings_save(request):
     pool_token = PoolToken.objects.create(pool_id=request.GET['pool'])
     build_url = lambda u: mark_safe(request.build_absolute_uri(u))
     context = {
-        'pool_token': str(pool_token),
+        'pool_token': str(pool_token.token),
         'website_url': build_url('/'),
         'content_url': build_url(f'/pool/{pool_id}/?token={pool_token}'),
         'display_name': 'Feedback service',

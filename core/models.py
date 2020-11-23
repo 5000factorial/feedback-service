@@ -61,7 +61,7 @@ class PoolToken(models.Model):
     # allow_after = models.DurationField(default=timedelta(seconds=0))
 
     def __str__(self):
-        return str(self.token)
+        return f'{str(pool)} - {str(self.token)}'
 
 
 class TeamsTeam(models.Model):
