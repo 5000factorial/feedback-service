@@ -5,6 +5,8 @@ from django.core.exceptions import PermissionDenied
 
 import core.models as models
 import core.decorators as decorators
+from core.answer_processing import save_answers
+from core.teams_utils import TeamsMetadata
 
 
 class DecoratorTestCase(TestCase):
@@ -82,3 +84,39 @@ class DecoratorTestCase(TestCase):
 
         with self.assertRaises(PermissionDenied):
             decorated_view(incorrect_token_request)
+
+
+class AnswerProcessingTestCase(TestCase):
+    def setUp(self):
+        self.questions = (
+            models.Question.objects.create(
+                name='0', content='Content', category=models.Question.OPEN
+            ),
+            models.Question.objects.create(
+                name='1', content='Content', category=models.Question.CLOSED
+            )
+        )
+        self.option = models.AnswerOption.objects.create(
+            question=self.questions[1], text='Opt0'
+        )
+        self.pool = models.Pool.objects.create(
+            name='Test'
+        )
+        self.pool.questions.set(self.questions)
+        self.pool_answer = models.PoolAnswer.objects.create(
+            pool=self.pool,
+            pool_token=models.PoolToken.objects.create(pool=self.pool),
+            ip='127.0.0.1'
+        )
+    
+    def test_save_answers(self):
+        post_data = {
+            f'question_{self.questions[0].id}': 'answer',
+            f'question_{self.questions[1].id}': self.option.id,
+        }
+        save_answers(post_data, self.pool, self.pool_answer,
+                     metadata=TeamsMetadata({}))
+        self.assertEqual(models.UserAnswer.objects.all().count(), 2)
+        # Was 1, should be 2
+        self.assertEqual(models.AnswerOption.objects.all().count(), 2)
+        
