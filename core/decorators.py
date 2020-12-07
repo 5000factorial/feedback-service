@@ -3,29 +3,30 @@ from typing import Callable
 from django.core.exceptions import PermissionDenied
 
 
+MS_TEAMS_CONTENT_SECURITY_POLICY = (
+    'frame-ancestors teams.microsoft.com '
+    '*.teams.microsoft.com *.skype.com'
+)
+
+
 def teams_tab_view(func):
     """
     Sets Content-Security-Policy header and legacy
     X-Content-Security-Policy for MS Teams
     """
     
-    content_security_policy = (
-        'frame-ancestors teams.microsoft.com '
-        '*.teams.microsoft.com *.skype.com'
-    )
-    
     def wrapper(request, *args, **kwargs):
         response = func(request, *args, **kwargs)
-        response['Content-Security-Policy'] = content_security_policy
-        response['X-Content-Security-Policy'] = content_security_policy
+        response['Content-Security-Policy'] = MS_TEAMS_CONTENT_SECURITY_POLICY
+        response['X-Content-Security-Policy'] = MS_TEAMS_CONTENT_SECURITY_POLICY
         return response
     
     return wrapper
 
 
-def validate_query_token(validator: Callable[[str], bool]):
+def validate_query_token(is_valid: Callable[[str], bool]):
     """
-    Checks token form query parameter or form parameter
+    Checks token from query parameter or form parameter
     with validator function
     """
     
