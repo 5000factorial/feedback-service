@@ -1,3 +1,4 @@
+import uuid
 from django.test import TestCase, RequestFactory
 from django.http import HttpResponse
 from django.core.exceptions import PermissionDenied
@@ -12,6 +13,10 @@ class DecoratorTestCase(TestCase):
         self.pool = models.Pool.objects.create(name='test')
         self.pool_token = models.PoolToken.objects.create(pool=self.pool)
         self.teams_token = models.TeamsToken.objects.create()
+        self.incorrect_uuid_token = uuid.uuid4()
+
+        self.assertNotEqual(self.pool_token.token, self.incorrect_uuid_token)
+        self.assertNotEqual(self.teams_token.token, self.incorrect_uuid_token)
         
         def test_view(*args, **kwargs):
             return HttpResponse()
@@ -49,7 +54,31 @@ class DecoratorTestCase(TestCase):
                 decorated_view(no_token_request)
 
     def test_validate_teams_token(self):
-        pass
+        decorated_view = decorators.validate_teams_token(self.view)
+        correct_token_request = self.request_factory.get(
+            '/', {'token': self.teams_token.token}
+        )
+        incorrect_token_request = self.request_factory.get(
+            '/', {'token': self.incorrect_uuid_token}
+        )
+
+        # Assert not raises
+        resp = decorated_view(correct_token_request)
+
+        with self.assertRaises(PermissionDenied):
+            decorated_view(incorrect_token_request)
 
     def test_validate_pool_token(self):
-        pass
+        decorated_view = decorators.validate_pool_token(self.view)
+        correct_token_request = self.request_factory.get(
+            '/', {'token': self.pool_token.token}
+        )
+        incorrect_token_request = self.request_factory.get(
+            '/', {'token': self.incorrect_uuid_token}
+        )
+
+        # Assert not raises
+        resp = decorated_view(correct_token_request)
+
+        with self.assertRaises(PermissionDenied):
+            decorated_view(incorrect_token_request)
