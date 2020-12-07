@@ -93,12 +93,12 @@ class PoolAnswer(models.Model):
     pool = models.ForeignKey(Pool, on_delete=models.CASCADE, null=False)
     pool_token = models.ForeignKey(PoolToken, on_delete=models.CASCADE, null=False)
     ip = models.GenericIPAddressField()
-    teams_channel = models.ForeignKey(TeamsChannel, on_delete=models.CASCADE, null=True)
-    teams_user = models.ForeignKey(TeamsUser, on_delete=models.CASCADE, null=True)
+    teams_channel = models.ForeignKey(TeamsChannel, on_delete=models.CASCADE, null=True, blank=True)
+    teams_user = models.ForeignKey(TeamsUser, on_delete=models.CASCADE, null=True, blank=True)
 
 
 class UserAnswer(models.Model):
-    user = models.ForeignKey(TeamsUser, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(TeamsUser, on_delete=models.CASCADE, null=True, blank=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False)
     option = models.ForeignKey(AnswerOption, on_delete=models.CASCADE, null=False)
     pool_answer = models.ForeignKey(PoolAnswer, on_delete=models.CASCADE)
