@@ -33,7 +33,7 @@ def validate_query_token(is_valid: Callable[[str], bool]):
     def decorator(func):
         def wrapper(request, *args, **kwargs):
             token = request.GET.get('token') or request.POST.get('token')
-            if validator(token):
+            if is_valid(token):
                 return func(request, *args, **kwargs)
             else:
                 raise PermissionDenied('Invalid token')
