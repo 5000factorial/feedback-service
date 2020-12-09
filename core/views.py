@@ -18,7 +18,8 @@ from core.models import (
 from core.decorators import (
     validate_pool_token, validate_teams_token, teams_tab_view
 )
-from core.teams_utils import app_manifest
+from core.teams_utils import app_manifest, TeamsMetadata
+from core.answer_processing import save_answers
 
 
 @method_decorator(csrf_exempt, 'dispatch')
@@ -57,61 +58,17 @@ class PoolView(DetailView):
         pool = get_object_or_404(Pool, pk=pk)
         questions = pool.questions.all()
 
-        teams_metadata = {
-            key: request.POST[key]
-            for key in request.POST if key.startswith('mst_')
-        }
-
-        teams_team = teams_channel = teams_user = None
-        if teams_metadata:
-            teams_team, _ = TeamsTeam.objects.get_or_create(
-                uid=teams_metadata['mst_team_id'],
-                defaults={'name': teams_metadata['mst_team_name']}
-            )
-            teams_channel, _ = TeamsChannel.objects.get_or_create(
-                uid=teams_metadata['mst_channel_id'],
-                defaults={'name': teams_metadata['mst_channel_name'],
-                          'team': teams_team}
-            )
-            teams_user, _ = TeamsUser.objects.get_or_create(
-                uid=teams_metadata['mst_user_id'],
-                defaults={'name': teams_metadata['mst_user_id']}
-            )
+        metadata = TeamsMetadata(request.POST)
 
         pool_answer = PoolAnswer.objects.create(
             ip=get_client_ip(request)[0],
             pool_token=PoolToken.objects.get(token=request.POST['token']),
-            teams_channel=teams_channel,
-            teams_user=teams_user,
+            teams_channel=metadata.channel,
+            teams_user=metadata.user,
             pool=pool
         )
 
-        user_answers_to_create = []
-
-        for question in questions:
-            answer = request.POST.get(f'question_{question.id}')
-            if not answer:
-                continue
-            if question.category == Question.CLOSED:
-                user_answers_to_create.append(
-                    UserAnswer(user=teams_user, question=question, option_id=answer,
-                               pool_answer=pool_answer)
-                )
-            elif question.category == Question.OPEN:
-                answer_option, _ = AnswerOption.objects.get_or_create(
-                    question=question,
-                    text=answer.lower()
-                )
-                user_answers_to_create.append(
-                    UserAnswer(
-                        user=teams_user,
-                        question=question,
-                        pool_answer=pool_answer,
-                        option_id=answer_option.id
-                    )
-                )
-
-        res = UserAnswer.objects.bulk_create(user_answers_to_create)
+        save_answers(request.POST, pool, pool_answer, metadata)
         return HttpResponse('OK')
 
 
