@@ -45,7 +45,6 @@ class PoolAdmin(nested_admin.NestedModelAdmin):
     inlines = [NestedPoolTokenAdmin]
 
 
-admin.site.register(models.PoolUser)
 admin.site.register(models.PoolToken, PoolTokenAdmin)
 admin.site.register(models.TeamsToken, TeamsTokenAdmin)
 admin.site.register(models.Question, QuestionAdmin)
