@@ -12,7 +12,7 @@ from typing import Callable
 import json
 
 from core.models import (
-    Pool, Question, UserAnswer, AnswerOption, PoolUser, TeamsToken, PoolToken,
+    Pool, Question, UserAnswer, AnswerOption, TeamsToken, PoolToken,
     TeamsTeam, TeamsChannel, TeamsUser, PoolAnswer
 )
 from core.decorators import (
