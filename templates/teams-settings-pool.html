@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <h4>Select Pool that will be displayed in Tab</h4>
+    <h4>Выберите опрос который будет показываться во вкладке</h4>
     <form action="/teams/settings/save/">
         <select name="pool">
-            <option hidden disabled selected value>-- select pool --</option>
+            <option hidden disabled selected value>-- выберите опрос --</option>
             {% for pool in pools %}
             <option value={{ pool.id }}>{{ pool.name }}</option>
             {% endfor%}
