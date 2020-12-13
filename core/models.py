@@ -24,8 +24,8 @@ class Question(NameMixin, models.Model):
     OPEN = 'open'
     CLOSED = 'closed'
     CATEGORIES = [
-        (OPEN, 'Open (Free answer)'),
-        (CLOSED, 'Closed (Fixed answer options)')
+        (OPEN, 'Открытый (Свободный ответ)'),
+        (CLOSED, 'Закрытый (Варианты ответа)')
     ]
 
     content = models.TextField(null=False, verbose_name='Текст')
