@@ -69,8 +69,6 @@ class PoolToken(models.Model):
     
     one_time = models.BooleanField(default=False, verbose_name='Одноразовый')
 
-    # allow_after = models.DurationField(default=timedelta(seconds=0))
-
     def __str__(self):
         return f'{str(self.pool)} - {str(self.token)}'
 

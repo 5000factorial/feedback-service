@@ -12,28 +12,29 @@ class TeamsMetadata:
         """
 
         metadata = {
-            key: data[key]
+            key.removeprefix(self.prefix): data[key]
             for key in data if key.startswith(self.prefix)
         }
         
         if not (self.keys & metadata.keys()):
+            print(self.keys, metadata.keys())
             self.team, self.channel, self.user = None, None, None
             return
         
         self.team, _ = TeamsTeam.objects.get_or_create(
-            uid=metadata[f'{self.prefix}team_id'],
-            defaults={'name': metadata[f'{self.prefix}team_name']}
+            uid=metadata['team_id'],
+            defaults={'name': metadata['team_name']}
         )
 
         self.channel, _ = TeamsChannel.objects.get_or_create(
-            uid=metadata[f'{self.prefix}channel_id'],
-            defaults={'name': metadata[f'{self.prefix}channel_name'],
-                      'team': teams_team}
+            uid=metadata['channel_id'],
+            defaults={'name': metadata[f'channel_name'],
+                      'team': self.team}
         )
 
         self.user, _ = TeamsUser.objects.get_or_create(
-            uid=metadata[f'{self.prefix}user_id'],
-            defaults={'name': metadata[f'{self.prefix}user_id']}
+            uid=metadata['user_id'],
+            defaults={'name': metadata['user_id']}
         )
 
 
