@@ -24,8 +24,8 @@ class Question(NameMixin, models.Model):
     OPEN = 'open'
     CLOSED = 'closed'
     CATEGORIES = [
-        (OPEN, 'Open (Free answer)'),
-        (CLOSED, 'Closed (Fixed answer options)')
+        (OPEN, 'Открытый (Свободный ответ)'),
+        (CLOSED, 'Закрытый (Варианты ответа)')
     ]
 
     content = models.TextField(null=False, verbose_name='Текст')
@@ -44,7 +44,7 @@ class Question(NameMixin, models.Model):
 
 class AnswerOption(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False, related_name='options', verbose_name='Вопрос')
-    text = models.TextField(null=False, help_text='Text representation of answer option', verbose_name='Текст')
+    text = models.TextField(null=False, help_text='Текст варианта ответа', verbose_name='Текст')
 
     def __str__(self):
         return f'{self.text[0:32]} (id: {self.id}, q: {self.question.name})'
@@ -68,8 +68,6 @@ class PoolToken(models.Model):
     pool = models.ForeignKey(Pool, on_delete=models.CASCADE, null=False, verbose_name='Опрос')
     
     one_time = models.BooleanField(default=False, verbose_name='Одноразовый')
-
-    # allow_after = models.DurationField(default=timedelta(seconds=0))
 
     def __str__(self):
         return f'{str(self.pool)} - {str(self.token)}'
