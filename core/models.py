@@ -44,7 +44,7 @@ class Question(NameMixin, models.Model):
 
 class AnswerOption(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False, related_name='options', verbose_name='Вопрос')
-    text = models.TextField(null=False, help_text='Text representation of answer option', verbose_name='Текст')
+    text = models.TextField(null=False, help_text='Текст варианта ответа', verbose_name='Текст')
 
     def __str__(self):
         return f'{self.text[0:32]} (id: {self.id}, q: {self.question.name})'
